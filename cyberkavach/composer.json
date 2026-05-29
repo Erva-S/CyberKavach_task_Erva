@@ -1,0 +1,13 @@
+{
+  "name": "erva/cyberkavach",
+  "description": "CyberKavach Smart Club Management System (scaffold)",
+  "type": "project",
+  "require": {
+    "php": ">=8.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "CyberKavach\\": "src/"
+    }
+  }
+}
