@@ -1,0 +1,929 @@
+# CyberKavach — System Logic, Pipeline & Enhanced Prompt
+
+## PART 1 — UNDERLYING LOGIC & SYSTEM THINKING
+
+### Core Architectural Logic
+
+The system operates on three foundational principles:
+
+**1. Everything is a workflow.** Every action in the club — creating an event, generating a certificate, posting on social media — must pass through a defined chain of accountability. The platform encodes these chains into code rather than relying on WhatsApp threads and verbal confirmations.
+
+**2. Permissions are data, not code.** Rather than hardcoding if-else permission checks, roles and permissions live in the database. This means adding a new role, restricting a feature, or granting temporary elevated access requires a database update, not a deployment.
+
+**3. Every action leaves a trail.** The audit log is not optional. Every insert, update, delete, approval, rejection, and login is recorded with the user ID, timestamp, IP address, and the before/after state. This transforms the platform from a tool into an institutional memory.
+
+---
+
+### Technology Stack Logic (PHP/MySQL)
+
+Since you're using PHP + MySQL + phpMyAdmin:
+
+- **Backend:** PHP 8.2+ with PDO for database access, no raw `mysqli_*` calls
+- **Frontend:** Vanilla HTML5, CSS3 (custom design system, no Bootstrap), JavaScript ES6+ with select libraries (Alpine.js for reactivity, Chart.js for analytics, QRCode.js)
+- **Database:** MySQL 8.0+ via phpMyAdmin, with foreign keys, indexes, and stored procedures for complex operations
+- **Sessions:** PHP sessions + JWT tokens stored in httpOnly cookies
+- **File Storage:** Local disk with Cloudinary API integration for media
+- **PDF:** FPDF or TCPDF library for certificate generation
+- **Email:** PHPMailer with SMTP (Gmail / SendGrid)
+- **QR:** endroid/qr-code or chillerlan/php-qrcode
+- **Real-time:** Polling-based with AJAX (optional: PHP Ratchet for WebSockets)
+- **Security:** PHP's built-in `password_hash()`, prepared statements, CSRF tokens, CSP headers
+
+---
+
+## PART 2 — PIPELINE OF STEPS (BUILD ORDER)
+
+### Phase 1 — Foundation (Week 1)
+1. Set up folder structure (feature-based, not file-type-based)
+2. Configure `.htaccess` for clean URLs and security headers
+3. Design and implement full MySQL schema in phpMyAdmin
+4. Build `config/database.php` with PDO singleton
+5. Build `core/Router.php` — URL routing engine
+6. Build `core/Auth.php` — session + JWT management
+7. Build `core/RBAC.php` — permission enforcement middleware
+8. Build `core/Audit.php` — audit logging engine
+9. Implement CSS design system (variables, typography, grid, components)
+10. Build base HTML layouts (public, auth, dashboard shells)
+
+### Phase 2 — Auth System (Week 2)
+11. User registration with institutional email validation
+12. Login with bcrypt password verification
+13. OTP email flow (registration + password reset)
+14. JWT token issuance and refresh logic
+15. Role-based redirect on login
+16. Device/session tracking table + UI
+17. Suspicious login detection (new IP → email alert)
+18. Logout + session destruction
+
+### Phase 3 — Core Modules (Weeks 3–5)
+19. Event CRUD (create, draft, publish, archive)
+20. Rich text editor integration (Quill.js)
+21. Banner upload with Cloudinary
+22. Multi-step approval engine (request → coordinator → student coord → faculty)
+23. Approval SLA timer + escalation cron job
+24. Team creation, invitation, and conflict detection
+25. Event registration with waitlist logic
+26. Approval timeline + remarks UI
+
+### Phase 4 — Operational Modules (Weeks 6–8)
+27. QR code generation for events and teams
+28. QR attendance scanner (camera API + AJAX)
+29. Manual check-in with live dashboard
+30. Certificate template manager (upload, field mapping)
+31. Bulk certificate generation with FPDF + queue
+32. Certificate QR verification system
+33. Reward point engine (assignment, categories, leaderboards)
+34. Badge/achievement system
+35. In-app notification center + email notifications
+36. Content pipeline (blog drafts → approvals → publish)
+37. Social media campaign planner + post approvals
+
+### Phase 5 — Dashboards (Week 9–10)
+38. Faculty Coordinator dashboard (all analytics, global controls)
+39. Student Coordinator dashboard (operational center)
+40. Tech Coordinator dashboard (resource + lab booking)
+41. Content Coordinator dashboard (editorial calendar)
+42. Social Media Coordinator dashboard (campaign + analytics)
+43. Club Member dashboard (personal timeline, gamification)
+44. Guest dashboard (public events + registration tracking)
+45. Chart.js integration (bar, line, doughnut, heatmap)
+46. Command palette (Ctrl+K global search)
+
+### Phase 6 — Public Pages (Week 11)
+47. Premium landing page with animated metrics
+48. Public events page with search + filter
+49. Event detail page with full registration flow
+50. Certificate verification page (ID + QR)
+51. Auth pages (login, register, forgot password) with premium design
+
+### Phase 7 — Security Hardening (Week 12)
+52. CSRF token on every form
+53. Rate limiting per IP (login attempts, form submissions)
+54. Input sanitization layer (htmlspecialchars, strip_tags)
+55. File upload validation (MIME type, size, extension whitelist)
+56. SQL injection prevention audit (all queries use prepared statements)
+57. XSS prevention (Content-Security-Policy header)
+58. Clickjacking prevention (X-Frame-Options header)
+59. Audit log viewer (admin-only, filterable)
+60. Session fixation prevention + secure cookie flags
+
+### Phase 8 — Deployment (Week 13–14)
+61. Apache `.htaccess` configuration (HTTPS redirect, security headers)
+62. Environment variables via `.env` file (not committed to git)
+63. Database backup cron job
+64. Error logging (PHP error log + custom app log)
+65. Mobile responsiveness audit and fixes
+66. Performance optimization (query caching, asset minification)
+67. Final security penetration test checklist
+68. Documentation and admin onboarding guide
+
+---
+
+## PART 3 — ENHANCED MASTER PROMPT
+
+---
+
+# ENHANCED MASTER PROMPT
+## CyberKavach Smart Club Management System
+### Production-Grade Institutional SaaS Platform
+
+---
+
+### IDENTITY & CONTEXT
+
+You are building the **CyberKavach Smart Club Management System** — a production-grade, institutionally deployable platform for a university-level cybersecurity club. This is not a college project. It is a real operational software system that replaces WhatsApp coordination, Google Forms, Excel sheets, informal approvals, manual certificate generation, and scattered communication with a single, unified, auditable platform.
+
+The platform must be worthy of deployment across an entire university ecosystem, with the potential to be licensed to other clubs, institutions, and organizations.
+
+---
+
+### TECHNOLOGY STACK (MANDATORY)
+
+**Frontend:**
+- HTML5 (semantic, accessible, ARIA-compliant)
+- CSS3 with a custom design system (no Bootstrap, no Tailwind — hand-crafted)
+- JavaScript ES6+ (vanilla, no React or Vue)
+- Alpine.js (lightweight reactivity for dynamic UI without a build step)
+- Chart.js (analytics and data visualization)
+- Quill.js (rich text editor for content workflows)
+- QRCode.js (client-side QR rendering)
+- Lucide Icons (via CDN, icon-only, no decorative emoji)
+
+**Backend:**
+- PHP 8.2+ (strict types, PSR-4 autoloading, OOP architecture)
+- PDO with prepared statements exclusively (zero raw SQL concatenation)
+- Custom MVC-style routing engine
+- RBAC middleware layer
+- Cron-based job runner (approvals SLA, email digests, reminders)
+- PHPMailer with SMTP (Gmail / SendGrid)
+- FPDF or TCPDF (PDF/certificate generation)
+- endroid/qr-code or chillerlan/php-qrcode (server-side QR)
+- Intervention Image (PHP image processing for certificates)
+- Composer for dependency management
+
+**Database:**
+- MySQL 8.0+ managed via phpMyAdmin
+- Full foreign key enforcement with InnoDB engine
+- Optimized indexes on all query-critical columns
+- Stored procedures for complex multi-table operations
+- Database-level cascades and soft deletes
+
+**Infrastructure:**
+- Apache 2.4+ with `.htaccess` (or Nginx equivalent)
+- PHP sessions with httpOnly, Secure, SameSite=Strict cookie flags
+- Cloudinary API for media storage (images, banners, certificate templates)
+- Google Drive API for certificate uploads
+- Local file system for temporary processing
+
+**Security Stack:**
+- `password_hash()` / `password_verify()` with BCRYPT
+- CSRF token on every state-changing form and AJAX request
+- Content-Security-Policy, X-Frame-Options, X-Content-Type-Options headers
+- Rate limiting via database or Redis-equivalent PHP cache
+- Input sanitization middleware on all incoming data
+- File upload validation (MIME type sniffing + extension whitelist)
+- Audit logging engine (every action recorded)
+
+---
+
+### DESIGN SYSTEM (MANDATORY — HAND-CRAFTED, NOT AI-GENERIC)
+
+The visual system must feel like it was designed by a senior product designer for an enterprise SaaS company. Reference points: Linear, Vercel Dashboard, Stripe, Notion, GitHub, Airtable.
+
+**DO NOT USE:**
+- Bootstrap or any CSS framework
+- Vibrant rainbow gradients
+- Excessive glassmorphism
+- Emoji anywhere in the UI
+- Generic dashboard card templates
+- Overused font combinations
+
+**THEME:**
+```css
+:root {
+  /* Backgrounds */
+  --bg-base: #0a0a0b;
+  --bg-surface: #111113;
+  --bg-elevated: #18181b;
+  --bg-overlay: #222226;
+  --bg-hover: #2a2a30;
+
+  /* Borders */
+  --border-subtle: rgba(255,255,255,0.06);
+  --border-default: rgba(255,255,255,0.10);
+  --border-strong: rgba(255,255,255,0.18);
+
+  /* Text */
+  --text-primary: #f4f4f5;
+  --text-secondary: #a1a1aa;
+  --text-muted: #52525b;
+  --text-disabled: #3f3f46;
+
+  /* Accents */
+  --accent-indigo: #6366f1;
+  --accent-indigo-muted: rgba(99,102,241,0.15);
+  --accent-cyan: #06b6d4;
+  --accent-cyan-muted: rgba(6,182,212,0.12);
+  --accent-amber: #f59e0b;
+  --accent-amber-muted: rgba(245,158,11,0.12);
+  --accent-red: #ef4444;
+  --accent-green: #22c55e;
+
+  /* Typography */
+  --font-display: 'DM Sans', sans-serif;
+  --font-body: 'IBM Plex Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  /* Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.5);
+  --shadow-focus: 0 0 0 3px rgba(99,102,241,0.25);
+}
+```
+
+**Light theme variant:** Off-white backgrounds (`#fafafa`, `#f4f4f5`), zinc text hierarchy, same accent palette.
+
+**Typography rules:**
+- DM Sans for all headings and display text
+- IBM Plex Sans for body, labels, form elements
+- IBM Plex Mono for IDs, codes, timestamps, certificate numbers
+- Type scale: 12 / 13 / 14 / 16 / 20 / 24 / 32 / 48px
+- Line heights: 1.4 for headings, 1.6 for body, 1.2 for compact UI
+- Letter-spacing: -0.02em on large headings, 0.02em on labels/badges
+
+**Component patterns:**
+- Cards: `var(--bg-surface)` background, `1px solid var(--border-subtle)`, `var(--radius-lg)`, 20px padding
+- Tables: borderless rows, alternating `var(--bg-hover)` on hover, sticky header, sortable columns
+- Badges: solid pill, 5px/10px padding, monospace text for IDs
+- Inputs: `var(--bg-elevated)` fill, `1px solid var(--border-default)`, focus ring `var(--shadow-focus)`
+- Sidebar: 240px fixed, `var(--bg-surface)`, 1px right border, collapsible with icon-only mode
+- Modals: centered overlay, `var(--bg-elevated)`, backdrop blur 4px (limited use)
+- Toasts: bottom-right stack, 320px wide, 4s auto-dismiss
+
+---
+
+### FOLDER STRUCTURE (MANDATORY)
+
+```
+cyberkavach/
+├── public/                  # Web root (Apache points here)
+│   ├── index.php            # Front controller
+│   ├── assets/
+│   │   ├── css/
+│   │   │   ├── design-system.css
+│   │   │   ├── components.css
+│   │   │   ├── layouts.css
+│   │   │   └── pages/
+│   │   ├── js/
+│   │   │   ├── app.js
+│   │   │   ├── api.js
+│   │   │   ├── components/
+│   │   │   └── modules/
+│   │   ├── fonts/
+│   │   └── images/
+│   └── uploads/             # Temp upload directory (not publicly accessible)
+│
+├── src/
+│   ├── Core/
+│   │   ├── Router.php
+│   │   ├── Request.php
+│   │   ├── Response.php
+│   │   ├── Session.php
+│   │   ├── Auth.php
+│   │   ├── RBAC.php
+│   │   ├── Audit.php
+│   │   ├── Validator.php
+│   │   ├── Sanitizer.php
+│   │   ├── Mailer.php
+│   │   ├── Queue.php
+│   │   └── Database.php
+│   │
+│   ├── Modules/
+│   │   ├── Auth/
+│   │   │   ├── AuthController.php
+│   │   │   ├── AuthService.php
+│   │   │   └── AuthValidator.php
+│   │   ├── Events/
+│   │   ├── Teams/
+│   │   ├── Approvals/
+│   │   ├── Attendance/
+│   │   ├── Certificates/
+│   │   ├── Rewards/
+│   │   ├── Notifications/
+│   │   ├── Content/
+│   │   ├── SocialMedia/
+│   │   ├── Analytics/
+│   │   └── Users/
+│   │
+│   ├── Middleware/
+│   │   ├── AuthMiddleware.php
+│   │   ├── RBACMiddleware.php
+│   │   ├── CSRFMiddleware.php
+│   │   ├── RateLimitMiddleware.php
+│   │   └── SanitizeMiddleware.php
+│   │
+│   └── Models/
+│       (one per DB table, thin data-access layer)
+│
+├── views/
+│   ├── layouts/
+│   │   ├── public.php
+│   │   ├── auth.php
+│   │   └── dashboard.php
+│   ├── public/
+│   ├── auth/
+│   └── dashboard/
+│       ├── faculty/
+│       ├── student-coord/
+│       ├── tech/
+│       ├── content/
+│       ├── social/
+│       ├── member/
+│       └── guest/
+│
+├── config/
+│   ├── app.php
+│   ├── database.php
+│   ├── mail.php
+│   ├── storage.php
+│   └── permissions.php     # RBAC permission map
+│
+├── database/
+│   ├── schema.sql
+│   ├── seeds/
+│   └── migrations/
+│
+├── storage/
+│   ├── logs/
+│   ├── cache/
+│   └── temp/
+│
+├── vendor/                  # Composer packages
+├── .env                     # Environment variables (gitignored)
+├── .env.example
+├── .htaccess
+├── composer.json
+└── cron.php                 # Cron job runner
+```
+
+---
+
+### COMPLETE DATABASE SCHEMA
+
+Design and implement the following tables in MySQL. All tables use InnoDB, UTF8MB4 charset, and snake_case naming.
+
+**Core Tables:**
+
+```sql
+-- Users and Identity
+users (id, ulid, name, email, phone, password_hash, avatar_url, 
+       enrollment_no, department, batch_year, bio, status, 
+       email_verified_at, last_login_at, last_login_ip, 
+       created_at, updated_at, deleted_at)
+
+roles (id, name, slug, description, level, is_system_role, created_at)
+-- Seeded: faculty_coordinator(7), student_coordinator(6), 
+--         tech_coordinator(5), content_coordinator(5), 
+--         social_coordinator(5), club_member(2), guest(1)
+
+user_roles (id, user_id, role_id, assigned_by, assigned_at, 
+            expires_at, is_active)
+
+permissions (id, module, action, description)
+-- e.g. module=events, action=create / approve / delete
+
+role_permissions (id, role_id, permission_id)
+
+user_sessions (id, user_id, token_hash, ip_address, user_agent, 
+               device_fingerprint, created_at, expires_at, 
+               last_used_at, is_revoked)
+
+-- Events
+events (id, ulid, title, slug, description_html, banner_url, 
+        category_id, venue, capacity, team_min, team_max,
+        registration_start, registration_end, event_start, 
+        event_end, status, visibility, created_by, 
+        approval_status, approved_by, approved_at,
+        is_paid, fee_amount, tags, created_at, updated_at)
+
+event_categories (id, name, slug, color, icon)
+event_coordinators (id, event_id, user_id, role_label)
+event_faqs (id, event_id, question, answer, sort_order)
+event_schedule (id, event_id, title, description, 
+                starts_at, ends_at, sort_order)
+
+-- Teams & Registration
+teams (id, ulid, event_id, name, leader_id, join_code, 
+       status, created_at)
+team_members (id, team_id, user_id, joined_at, role_in_team, 
+              invited_by, invitation_status)
+
+registrations (id, ulid, event_id, team_id, user_id, 
+               registered_at, status, payment_status, 
+               payment_reference, waitlist_position)
+
+-- Approvals
+approval_requests (id, ulid, type, title, description, 
+                   requested_by, current_level, max_level,
+                   status, priority, sla_deadline, 
+                   related_id, related_type, metadata_json,
+                   created_at, updated_at)
+
+approval_steps (id, request_id, level, approver_role, 
+                assigned_to, action, remarks, 
+                attachment_url, acted_at)
+
+-- Attendance
+attendance_sessions (id, event_id, label, qr_token, 
+                     qr_expires_at, gate_label, 
+                     created_by, created_at, closed_at)
+
+attendance_records (id, session_id, user_id, team_id, 
+                    check_in_at, check_out_at, method,
+                    lat, lng, is_late, is_flagged, 
+                    scanned_by)
+
+-- Certificates
+certificate_templates (id, name, event_id, template_url, 
+                        width_px, height_px, orientation,
+                        fields_json, created_by, created_at)
+
+certificate_field_map (id, template_id, field_key, 
+                        x_percent, y_percent, font_family,
+                        font_size, font_weight, color, 
+                        align, max_width_percent)
+
+certificates (id, ulid, certificate_number, event_id, 
+              user_id, template_id, file_url, 
+              qr_code_url, issued_at, issued_by,
+              verification_hash, is_revoked,
+              generation_status, generated_at)
+
+-- Rewards
+reward_points (id, user_id, points, category, 
+               description, reference_id, reference_type, 
+               awarded_by, awarded_at)
+
+badges (id, name, description, icon, condition_type, 
+        condition_value, xp_required, tier)
+
+user_badges (id, user_id, badge_id, earned_at, 
+             awarded_for_event_id)
+
+-- Notifications
+notifications (id, user_id, type, title, body, 
+               action_url, is_read, read_at, 
+               sent_via, created_at)
+
+notification_preferences (id, user_id, type, 
+                           in_app_enabled, email_enabled)
+
+-- Content
+content_posts (id, ulid, title, slug, body_html, excerpt,
+               cover_url, category, tags, author_id,
+               status, scheduled_at, published_at,
+               approval_request_id, seo_title, 
+               seo_description, created_at, updated_at)
+
+-- Social Media
+social_campaigns (id, event_id, platform, caption, 
+                  hashtags, media_urls_json, 
+                  scheduled_at, posted_at, status,
+                  created_by, approved_by, created_at)
+
+-- Audit & System
+audit_logs (id, user_id, action, module, record_type, 
+            record_id, old_value_json, new_value_json,
+            ip_address, user_agent, created_at)
+
+-- Indexes (mandatory)
+-- users: email, status, deleted_at
+-- events: slug, status, approval_status, event_start
+-- attendance_records: session_id + user_id (composite unique)
+-- certificates: certificate_number (unique), verification_hash
+-- audit_logs: module, user_id, created_at
+```
+
+---
+
+### USER ROLES — COMPLETE SPECIFICATION
+
+Implement exactly 7 roles. Each role has a defined permission set stored in the `role_permissions` table and enforced by `RBACMiddleware.php`.
+
+**Role Level Hierarchy (enforced in approval chains):**
+```
+Level 1 — Guest
+Level 2 — Club Member
+Level 5 — Tech / Content / Social Coordinator
+Level 6 — Student Coordinator
+Level 7 — Faculty Coordinator
+```
+
+**Permission Map (config/permissions.php):**
+```php
+return [
+  'events' => ['view', 'create', 'edit', 'delete', 'approve', 'clone'],
+  'teams' => ['view', 'create', 'join', 'manage', 'delete'],
+  'registrations' => ['view', 'create', 'cancel', 'export'],
+  'approvals' => ['view_own', 'view_all', 'approve', 'reject', 'escalate'],
+  'attendance' => ['view', 'scan', 'mark_manual', 'export'],
+  'certificates' => ['view_own', 'view_all', 'generate', 'revoke', 'send'],
+  'rewards' => ['view', 'award', 'revoke', 'manage_badges'],
+  'content' => ['view', 'draft', 'submit', 'approve', 'publish', 'delete'],
+  'social' => ['view', 'draft', 'submit', 'approve', 'schedule'],
+  'users' => ['view', 'invite', 'manage_roles', 'deactivate'],
+  'analytics' => ['view_own', 'view_club', 'view_global', 'export'],
+  'settings' => ['view', 'manage_branding', 'manage_system'],
+  'audit' => ['view'],
+];
+```
+
+---
+
+### MODULE 1 — MULTI-LEVEL APPROVAL ENGINE
+
+This is the most critical module. It must be bulletproof.
+
+**Approval Flow Architecture:**
+
+```
+Request Created by User
+    ↓
+Level 1: Department Coordinator (Tech/Content/Social) — 24hr SLA
+    ↓ [if approved]
+Level 2: Student Coordinator — 48hr SLA
+    ↓ [if approved]
+Level 3: Faculty Coordinator — 72hr SLA
+    ↓ [if approved]
+Request Fulfilled (action triggered automatically)
+```
+
+**PHP Implementation Requirements:**
+
+- `ApprovalService::createRequest()` — creates approval request + first step
+- `ApprovalService::processStep()` — records decision, advances or closes chain
+- `ApprovalService::escalate()` — called by cron when SLA exceeded
+- `ApprovalService::getTimeline()` — returns full step history with remarks
+- Each approval type has a config: `APPROVAL_TYPES` constant defining levels, SLA, and auto-action on completion
+- Cron job runs every 15 minutes to check SLA violations and send reminder emails
+- Escalation sends notification to next-level approver with context
+- All approval actions are audit-logged
+
+**Request Types:**
+- `event_create` — event goes live after final approval
+- `venue_booking` — lab/room request
+- `budget_request` — financial allocation
+- `social_post` — post published on approval
+- `content_publish` — blog post goes live
+- `certificate_authorize` — bulk cert generation enabled
+- `external_collaboration` — inter-club or external partner
+
+---
+
+### MODULE 2 — CERTIFICATE SYSTEM
+
+**Certificate Generation Pipeline:**
+
+```
+1. Faculty/Student Coord uploads PNG/PDF template
+2. Template editor: drag-drop field zones (name, event, date, ID)
+3. Field mapping stored in certificate_field_maps table
+4. Upload CSV of recipients OR link to attendance data
+5. Validation: check all fields present, name normalization
+6. Queue batch job (PHP queue table or Redis-equivalent)
+7. FPDF/TCPDF renders each cert: places fields at (x%, y%) coordinates
+8. Each cert gets unique ID: CK-YYYY-EVENTCODE-NNNNNN
+9. SHA-256 hash of (cert_id + user_id + event_id + secret_key) stored as verification_hash
+10. QR code generated pointing to /verify/{cert_id}
+11. QR embedded in certificate image
+12. Batch zipped + uploaded to Cloudinary + Google Drive
+13. Individual emails sent via PHPMailer queue
+14. Generation log with success/failure per recipient
+```
+
+**Verification Page (/verify/{id}):**
+- Lookup by cert ID or verification hash
+- Display: holder name, event, date, issuing authority
+- Show tamper status (hash match = valid)
+- Display downloadable verification report PDF
+- No login required (public endpoint)
+
+---
+
+### MODULE 3 — ATTENDANCE SYSTEM
+
+**QR-Based Attendance:**
+
+```
+Coordinator creates attendance session (generates unique QR token)
+    ↓
+QR displayed on screen or printed (expires in N minutes if rotating)
+    ↓
+Member scans QR (camera API in browser, no app needed)
+    ↓
+AJAX POST to /api/attendance/check-in with {token, user_id, lat, lng}
+    ↓
+Server validates: token valid + not expired + user registered + not duplicate
+    ↓
+Record inserted, live dashboard updates via polling
+    ↓
+Late flag set if after event start time + grace period
+```
+
+**Live Attendance Dashboard:**
+- Real-time count (AJAX polling every 5 seconds)
+- Present / Absent / Late / Not-arrived counters
+- List with member photo, name, check-in time
+- Export to CSV / PDF
+- Geofence validation (optional, using GPS coordinates)
+
+---
+
+### MODULE 4 — REWARDS & GAMIFICATION
+
+**Point Economy:**
+```
+Event participation: 10 pts
+Event winning (1st): 100 pts + Gold badge
+Event winning (2nd): 60 pts + Silver badge
+Event winning (3rd): 40 pts + Bronze badge
+Volunteer work: 20 pts
+Content published: 15 pts
+Perfect attendance (event): 25 pts
+Consecutive events (streak): 5 pts × streak_count
+Referral (invited member joins): 30 pts
+Certificate earned: 10 pts
+```
+
+**XP Levels:** Novice (0) → Member (100) → Active (300) → Core (700) → Elite (1500) → Legend (3000)
+
+**Leaderboard:** Seasonal (per academic semester) + All-time. Shows rank, avatar, name, points, level badge.
+
+---
+
+### DASHBOARD SPECIFICATIONS (ALL 7)
+
+Each dashboard must be architecturally distinct — not the same card layout reskinned.
+
+**Faculty Coordinator Dashboard:**
+- Top bar: pending approvals count (red badge), unread alerts, global search
+- Left sidebar: full module access
+- Hero area: 4 KPI cards (active events, total members, pending approvals, certs issued)
+- Analytics row: Event growth chart (12 months), Member growth chart, Attendance rate heatmap
+- Approval bottleneck widget: shows which requests have exceeded SLA
+- Coordinator performance table: each coordinator's events managed, approvals processed
+- Audit log feed: last 20 system actions
+- System health widget: database size, active sessions, error rate
+
+**Student Coordinator Dashboard:**
+- Event operations center: active events with live registration count and progress bar
+- Approval queue: actionable cards, approve/reject inline with remarks
+- Certificate generation panel: events with pending cert generation
+- Volunteer assignment: drag team members to event roles
+- Live attendance widget: currently active sessions with counts
+- Auto-reminder controls: schedule email reminders per event
+
+**Tech Coordinator Dashboard:**
+- Resource calendar: lab bookings, equipment allocation
+- Pending resource requests: approve/reject inline
+- Repository access panel: GitHub/GitLab integration links
+- Technical support tickets: logged by members, status tracking
+- Equipment inventory: assets, condition, assigned-to
+
+**Content Coordinator Dashboard:**
+- Editorial calendar: month view, posts color-coded by status
+- Content pipeline kanban: Draft → Review → Approved → Published
+- Quill.js integrated editor (in-page, no redirect)
+- Version history: see previous drafts
+- SEO scoring widget per post (readability, keyword density)
+- Newsletter composer: templates + recipient lists
+
+**Social Media Coordinator Dashboard:**
+- Campaign board: events mapped to social campaigns
+- Post approval queue: preview post, approve/reject
+- Scheduled posts timeline: week view
+- Engagement metrics: (manual entry or API integration)
+- Media library: uploaded assets for social use
+- AI caption generator: sends event description to Anthropic API, returns suggested caption
+
+**Club Member Dashboard:**
+- Profile card: name, enrollment, level, XP bar, badges
+- My events: registered events, status, team
+- Certificates: earned certs with download + share
+- Reward history: point timeline
+- Attendance history: per-event attendance record
+- Notification center: all alerts, read/unread
+- Volunteer log: events helped coordinate
+
+**Guest/Student Dashboard:**
+- Browse events: filtered by category, date, registration status
+- My registrations: tracking card for each
+- Interest form: join the club
+- Recommended events: based on viewed categories
+
+---
+
+### SECURITY ARCHITECTURE (NON-NEGOTIABLE)
+
+Every single one of these must be implemented:
+
+**Authentication Security:**
+- Passwords: `password_hash($password, PASSWORD_BCRYPT, ['cost' => 12])`
+- Sessions: regenerate ID on login (`session_regenerate_id(true)`)
+- Cookies: `HttpOnly`, `Secure`, `SameSite=Strict`, `Path=/`
+- JWT: signed with HS256, expiry 15 minutes, refresh token 30 days in httpOnly cookie
+- OTP: 6-digit, SHA-256 hashed before storage, 10-minute expiry, max 3 attempts
+
+**CSRF Protection:**
+- Token generated per session: `bin2hex(random_bytes(32))`
+- Embedded as hidden field in every HTML form
+- Sent as `X-CSRF-Token` header in every AJAX request
+- Validated in middleware before any POST/PUT/DELETE handler
+- Token rotated after each use
+
+**Input Security:**
+- All user input passes through `Sanitizer::clean()` before use
+- HTML content (rich text) passed through HTMLPurifier with strict allowlist
+- All DB queries use PDO prepared statements — zero string interpolation in SQL
+- File uploads: MIME-type detection via `finfo_file()`, extension whitelist, rename with UUID, store outside web root
+
+**Rate Limiting:**
+- Login: 5 attempts per IP per 15 minutes → 30-minute lockout
+- OTP: 3 requests per email per hour
+- Registration: 3 accounts per IP per day
+- API endpoints: 60 requests per minute per authenticated user
+- Certificate generation: 1 batch per event per 5 minutes
+
+**HTTP Security Headers (.htaccess):**
+```apache
+Header always set Content-Security-Policy "default-src 'self'; script-src 'self' cdn.jsdelivr.net; img-src 'self' data: res.cloudinary.com; font-src 'self' fonts.gstatic.com"
+Header always set X-Frame-Options "DENY"
+Header always set X-Content-Type-Options "nosniff"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+Header always set Permissions-Policy "geolocation=(self), camera=(self)"
+Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+```
+
+**Audit Logging — Every action logged:**
+```php
+Audit::log(
+    action: 'certificate.generate',
+    module: 'certificates',
+    record_type: 'certificate_batch',
+    record_id: $batchId,
+    old_value: null,
+    new_value: ['event_id' => $eventId, 'count' => $count]
+);
+```
+
+---
+
+### PUBLIC PAGES — DESIGN SPECIFICATIONS
+
+**Landing Page sections (in order):**
+1. Navigation: logo + links + login CTA, sticky, transparent → solid on scroll
+2. Hero: large heading, subtext, two CTAs, animated stat counters (members, events, certificates)
+3. About the club: CyberKavach's mission, founding, domains (CTF, security research, workshops)
+4. Upcoming events: horizontal scrollable event cards with countdown timers
+5. Platform features: icon + title + one-line description, 3-column grid
+6. Coordinators: photo cards with name, role, LinkedIn
+7. Stats bar: full-width dark stripe, 4 animated numbers
+8. Event gallery: masonry photo grid
+9. Testimonials: quote cards, member name, batch
+10. Join CTA: email input + button
+11. Footer: links, social, contact, legal
+
+**Every page must:** Use semantic HTML5, be fully responsive (320px to 2560px), achieve 90+ Lighthouse performance score, and work without JavaScript for core content.
+
+---
+
+### NOTIFICATION SYSTEM
+
+**Delivery channels:** In-app (always) + Email (user preference) + Browser push (future-ready architecture)
+
+**Trigger events:**
+- Approval request received / approved / rejected / escalated
+- Event registration confirmed / waitlist position changed
+- Certificate ready for download
+- Attendance session opened (for registered members)
+- Reward points awarded / badge earned
+- New announcement from coordinator
+- SLA warning (for coordinators)
+- New member joined (for coordinators)
+
+**Email templates:** Each email uses a master layout (HTML email, inline CSS, dark/light compatible) with CyberKavach branding. PHPMailer sends via SMTP. Bulk digests batched every hour via cron.
+
+---
+
+### GLOBAL SEARCH & COMMAND PALETTE
+
+Triggered by `Ctrl+K` or `/` keyboard shortcut. Renders full-screen overlay with:
+- Instant search across: events, members, teams, certificates, approvals, content
+- Recent items section (last 5 visited)
+- Quick actions: "Create Event", "Generate Certs", "View Approvals"
+- Keyboard navigation (arrow keys + Enter)
+- Results grouped by type with icons
+- AJAX endpoint: `/api/search?q={query}&types[]=events&types[]=users`
+
+---
+
+### REAL-TIME FEATURES (AJAX POLLING)
+
+Since this uses PHP (not Node.js), real-time is implemented via efficient polling:
+
+- Attendance live count: 5-second AJAX poll on active session pages
+- Notification badge count: 30-second poll (returns unread count only)
+- Approval queue: 60-second poll for coordinators
+- Dashboard KPI counters: 5-minute poll
+- All polling endpoints return minimal JSON and are rate-limited
+
+For future WebSocket support: architecture must allow dropping in PHP Ratchet without restructuring.
+
+---
+
+### MOBILE RESPONSIVENESS STRATEGY
+
+- Mobile-first CSS (min-width breakpoints: 480, 768, 1024, 1280, 1440)
+- Sidebar collapses to bottom nav bar on mobile
+- Tables become card-stacked views on mobile (CSS only)
+- QR scanner works via browser camera API (getUserMedia) on mobile Chrome/Safari
+- Touch-optimized tap targets (minimum 44px)
+- Dashboard widgets reorder to single column on mobile
+- Command palette adapts to full-screen modal on mobile
+
+---
+
+### DEPLOYMENT ARCHITECTURE
+
+```
+Production Server
+├── /var/www/cyberkavach/public/     (Apache DocumentRoot)
+├── /var/www/cyberkavach/src/        (PHP application)
+├── /var/www/cyberkavach/storage/    (logs, cache, temp)
+└── /etc/cron.d/cyberkavach          (cron jobs)
+
+Cron Jobs:
+*/15 * * * * php /var/www/cyberkavach/cron.php approval_sla_check
+0 * * * * php /var/www/cyberkavach/cron.php email_digest
+*/5 * * * * php /var/www/cyberkavach/cron.php process_cert_queue
+0 2 * * * php /var/www/cyberkavach/cron.php cleanup_expired_sessions
+0 3 * * 0 mysqldump cyberkavach | gzip > /backups/db-$(date +%Y%m%d).sql.gz
+```
+
+---
+
+### IMPLEMENTATION PRIORITIES
+
+When building, implement in this strict order to ensure the system is always in a working state:
+
+1. **Schema + migrations** — database must be perfect before any PHP is written
+2. **Core infrastructure** — Router, Database, Auth, RBAC, Audit (no features yet)
+3. **Auth flows** — login, register, OTP, role routing (system is useless without this)
+4. **Approval engine** — this unlocks every other module
+5. **Events module** — most visible feature
+6. **Attendance** — operational dependency for events
+7. **Certificates** — depends on events + attendance
+8. **Rewards** — depends on events + certificates
+9. **Dashboards** — consume all module data
+10. **Public pages** — polish layer, built last
+
+---
+
+### QUALITY GATES (EVERY FILE MUST PASS)
+
+Before any PHP file is considered complete:
+- [ ] Zero raw SQL string concatenation
+- [ ] All inputs sanitized before use
+- [ ] CSRF token checked on state-changing endpoints
+- [ ] Error handling: try/catch with proper logging, never expose stack traces
+- [ ] All queries use indexes (run EXPLAIN on critical queries)
+- [ ] Audit log called on every write operation
+- [ ] RBAC permission check at top of every controller method
+- [ ] PHPDoc on all public methods
+
+Before any HTML page is complete:
+- [ ] Validates as HTML5 (W3C validator)
+- [ ] Passes WCAG 2.1 AA (keyboard navigable, ARIA labels, color contrast)
+- [ ] No inline styles (only design system classes and CSS variables)
+- [ ] No console errors in browser
+- [ ] Responsive at 320px, 768px, 1024px, 1440px
+
+---
+
+### SCALABILITY CONSIDERATIONS
+
+Design decisions that ensure the system scales:
+
+- **ULID primary keys** for all user-facing entities (sortable, globally unique, no enumeration)
+- **Soft deletes** on users, events, teams (never hard-delete)
+- **Metadata JSON columns** on approvals and events for extension without schema changes
+- **Queue table** for async jobs (cert generation, bulk email) — replaceable with Redis/Beanstalk
+- **Percentage-based certificate field positioning** — works at any resolution
+- **Module isolation** — each module's code is self-contained, can be extracted as a microservice
+- **Multi-club ready** — add `club_id` to all entity tables and filter everywhere (architecture supports it from day one)

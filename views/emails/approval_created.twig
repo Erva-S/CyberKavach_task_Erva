@@ -1,0 +1,9 @@
+{% extends 'layout.twig' %}
+{% block title %}Approval Requested: {{ title }}{% endblock %}
+{% block body %}
+  <h1>Approval requested: {{ title }}</h1>
+  <p class="meta">Request ID: <strong>{{ ulid }}</strong> &nbsp;•&nbsp; Type: <strong>{{ type }}</strong></p>
+  <p>{{ description|raw }}</p>
+  <p class="meta">Requested by: {{ requested_by_name }} on {{ created_at }}</p>
+  <a class="cta" href="{{ request_link }}">View Request</a>
+{% endblock %}

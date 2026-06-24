@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="CyberKavach">
+  <rect width="64" height="64" rx="14" fill="#0f172a"/>
+  <path d="M32 12l18 10v20L32 52 14 42V22z" fill="#22d3ee"/>
+  <path d="M32 20l10 6v12l-10 6-10-6V26z" fill="#e2e8f0"/>
+</svg>

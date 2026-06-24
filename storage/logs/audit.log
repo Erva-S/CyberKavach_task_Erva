@@ -1,0 +1,12 @@
+2026-05-30 17:51:07 | user:1 | event_categories.create | record:event_categories/1 | ip:- | ua:-
+2026-05-30 17:51:12 | user:1 | event_categories.update | record:event_categories/1 | ip:- | ua:-
+2026-05-30 17:51:17 | user:1 | event_categories.delete | record:event_categories/1 | ip:- | ua:-
+2026-05-30 18:19:30 | user:1 | event_categories.create | record:event_categories/2 | ip:- | ua:-
+2026-05-30 18:19:39 | user:1 | event_categories.update | record:event_categories/2 | ip:- | ua:-
+2026-05-30 18:19:48 | user:1 | event_categories.delete | record:event_categories/2 | ip:- | ua:-
+2026-05-30 18:22:51 | user:1 | event_categories.create | record:event_categories/3 | ip:- | ua:-
+2026-05-30 18:30:45 | user:1 | event_categories.create | record:event_categories/4 | ip:- | ua:-
+2026-05-30 18:31:20 | user:1 | event_categories.create | record:event_categories/5 | ip:- | ua:-
+2026-05-30 18:31:20 | user:1 | event_categories.delete | record:event_categories/5 | ip:- | ua:-
+2026-06-22 08:26:27 | user:1 | auth.login | record:user/1 | ip:127.0.0.1 | ua:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36
+2026-06-22 08:30:39 | user:1 | auth.login | record:user/1 | ip:127.0.0.1 | ua:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36

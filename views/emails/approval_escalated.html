@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Approval Escalated</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; color: #0f172a; }
+    .card { background: #ffffff; border-radius: 8px; padding: 20px; border: 1px solid #e6eaf0; max-width: 680px; margin: 24px auto; }
+    .badge { background:#ef4444;color:#fff;padding:6px 10px;border-radius:6px;font-weight:600 }
+    h1 { font-size:18px; margin:0 0 8px }
+    p { margin:8px 0; color:#334155 }
+    a.cta { display:inline-block; margin-top:12px; padding:10px 14px; background:#6366f1; color:#fff; border-radius:8px; text-decoration:none }
+    .meta { color:#64748b; font-size:13px }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="badge">SLA Escalation</div>
+    <h1>Approval escalated: {{title}}</h1>
+    <p class="meta">Request ID: <strong>{{ulid}}</strong> &nbsp;•&nbsp; From level: <strong>{{from}}</strong> To: <strong>{{to}}</strong></p>
+    <p>{{description}}</p>
+    <a class="cta" href="{{request_link}}">Review Now</a>
+    <hr />
+    <p class="meta">This request exceeded its SLA and has been escalated automatically.</p>
+  </div>
+</body>
+</html>

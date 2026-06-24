@@ -1,0 +1,9 @@
+{% extends 'layout.twig' %}
+{% block title %}Approval Escalated: {{ title }}{% endblock %}
+{% block body %}
+  <div class="badge" style="background:#ef4444;color:#fff">SLA Escalation</div>
+  <h1>Approval escalated: {{ title }}</h1>
+  <p class="meta">Request ID: <strong>{{ ulid }}</strong> &nbsp;•&nbsp; From level: <strong>{{ from }}</strong> To: <strong>{{ to }}</strong></p>
+  <p>{{ description|raw }}</p>
+  <a class="cta" href="{{ request_link }}">Review Now</a>
+{% endblock %}
